@@ -1,3 +1,5 @@
+package org.apache.tapestry5.json;
+
 // Copyright 2007, 2010, 2011, 2012 The Apache Software Foundation
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,9 +14,10 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package org.apache.tapestry5.json;
-
-/*
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.LinkedHashMap;
+import java.util.Set;/*
  * Copyright (c) 2002 JSON.org
  * Permission is hereby granted, free of charge, to any person obtaining a copy
  * of this software and associated documentation files (the "Software"), to deal
@@ -33,8 +36,6 @@ package org.apache.tapestry5.json;
  * OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
  * SOFTWARE.
  */
-
-import java.util.*;
 
 /**
  * A JSONObject is an unordered collection of name/value pairs. Its external form is a string wrapped in curly braces
@@ -89,8 +90,8 @@ import java.util.*;
  * @author JSON.org
  * @version 2
  */
-@SuppressWarnings(
-        {"CloneDoesntCallSuperClone"})
+//     https://issues.apache.org/jira/browse/TAP5-2098   LinkedHashMap
+@SuppressWarnings({"CloneDoesntCallSuperClone"})
 public final class JSONObject extends JSONCollection
 {
 
@@ -133,7 +134,9 @@ public final class JSONObject extends JSONCollection
     /**
      * The map where the JSONObject's properties are kept.
      */
-    private final Map<String, Object> properties = new HashMap<String, Object>();
+    private final Map<String, Object> properties = new LinkedHashMap<String, Object>();
+    // private final Map<String, Object> properties = Collections.synchronizedMap(new ListOrderedMap<String, Object > ());
+    //private final Map<String, Object> properties = Collections.synchronizedMap(new LinkedMap<String, Object > ());
 
     /**
      * It is sometimes more convenient and less ambiguous to have a <code>NULL</code> object than to use Java's
@@ -569,6 +572,7 @@ public final class JSONObject extends JSONCollection
      *
      * @return An iterator of the keys.
      */
+    // todo public SortedSet<String> keys()
     public Set<String> keys()
     {
         return properties.keySet();
@@ -971,7 +975,7 @@ public final class JSONObject extends JSONCollection
     {
         assert newProperties != null;
 
-        for (Map.Entry<String, ?> e : newProperties.entrySet())
+        for (java.util.Map.Entry<String, ?> e : newProperties.entrySet())
         {
             put(e.getKey(), e.getValue());
         }
