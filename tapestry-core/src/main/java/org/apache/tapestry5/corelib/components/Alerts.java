@@ -49,6 +49,9 @@ public class Alerts extends BaseClientElement
     @Parameter(value = "message:core-dismiss-label", defaultPrefix = BindingConstants.LITERAL)
     private String dismissText;
 
+    /* Enable HTML rendering for alert message */
+    @Parameter("false")
+    protected boolean markup;
 
     /**
      * If set to true, then the "dismiss all" button will not be rendered on the client.
@@ -114,7 +117,7 @@ public class Alerts extends BaseClientElement
 
         for (Alert alert : storage.getAlerts())
         {
-            javaScriptSupport.require("t5/core/alert").with(alert.toJSON());
+            javaScriptSupport.require("t5/core/alert").with(alert.toJSON(markup));
         }
 
         storage.dismissNonPersistent();

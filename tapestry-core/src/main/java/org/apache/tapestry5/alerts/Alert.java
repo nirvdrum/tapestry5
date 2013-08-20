@@ -1,3 +1,5 @@
+package org.apache.tapestry5.alerts;
+
 // Copyright 2011 The Apache Software Foundation
 //
 // Licensed under the Apache License, Version 2.0 (the "License");
@@ -12,8 +14,6 @@
 // See the License for the specific language governing permissions and
 // limitations under the License.
 
-package org.apache.tapestry5.alerts;
-
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.apache.tapestry5.json.JSONObject;
 
@@ -26,6 +26,8 @@ import java.util.concurrent.atomic.AtomicLong;
  * it is presented to the user).
  *
  * @since 5.3
+ *
+ * Support for inside HTML in alerts
  */
 public class Alert implements Serializable
 {
@@ -41,7 +43,7 @@ public class Alert implements Serializable
 
     public final Severity severity;
 
-    public final String message;
+    public String message;
 
     /**
      * Alert with default duration of {@link Duration#SINGLE} and default severity
@@ -79,8 +81,13 @@ public class Alert implements Serializable
                 message);
     }
 
-    public JSONObject toJSON()
+    public JSONObject toJSON(boolean markup)
     {
+        boolean isMarkup = false;
+        if (markup) {
+            message = message.replaceAll("&lt;","<").replaceAll("&gt;",">");
+        }
+
         JSONObject result = new JSONObject("message", message,
                 "severity", severity.name().toLowerCase() );
 
@@ -92,6 +99,10 @@ public class Alert implements Serializable
         if (duration.persistent)
         {
             result.put("id", id);
+        }
+
+        if (markup) {
+            result.put("markup", true);
         }
 
         return result;
