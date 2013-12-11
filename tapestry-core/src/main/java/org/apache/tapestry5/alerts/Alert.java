@@ -17,6 +17,8 @@ package org.apache.tapestry5.alerts;
 import org.apache.tapestry5.ioc.internal.util.InternalUtils;
 import org.apache.tapestry5.json.JSONObject;
 
+import javax.print.attribute.standard.Severity;
+import javax.xml.datatype.Duration;
 import java.io.Serializable;
 import java.util.concurrent.atomic.AtomicLong;
 

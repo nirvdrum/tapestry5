@@ -51,7 +51,7 @@ public class ClientDataEncoderImpl implements ClientDataEncoder
         {
             String message = String.format("The symbol '%s' has not been configured. " +
                     "This is used to configure hash-based message authentication of Tapestry data stored in forms, or in the URL. " +
-                    "You application is less secure, and more vulnerable to denial-of-service attacks, when this symbol is not configured.",
+                    "Your application is less secure, and more vulnerable to denial-of-service attacks, when this symbol is not configured.",
                     SymbolConstants.HMAC_PASSPHRASE);
 
             // Now to really get the attention of the developer!
